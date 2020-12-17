@@ -8,7 +8,6 @@ import * as microsoftTeams from "@microsoft/teams-js";
 import Canvas from './Canvas';
 function Tab() {
   const [context, setContext] = useState({});
-  // const [cat, setcat] = useState();
 
   useEffect(() => {
     microsoftTeams.getContext((context, error) => {
@@ -20,8 +19,8 @@ function Tab() {
 
   return (
     <div className="hello">
-      <h1>Hello {userName}</h1>
       <Canvas />
+      <h1>Hello {userName}</h1>
     </div>
   );
 }

@@ -5,7 +5,9 @@ export default function Canvas() {
   const [locations, setLocations, canvasRef] = usePersistentCanvas();
 
   function handleCanvasClick(e) {
-    setLocations([...locations, { x: e.clientX, y: e.clientY }]);
+    // const message = await prompt("Please enter a message", "");
+    const message = "hello!";
+    setLocations([...locations, { x: e.clientX, y: e.clientY, message }]);
   }
 
   function handleClear() {
@@ -17,11 +19,17 @@ export default function Canvas() {
   }
 
   return (
-    <canvas
-      ref={canvasRef}
-      width="500"
-      height="500"
-      onClick={handleCanvasClick}
-    />
+    <>
+      <canvas
+        ref={canvasRef}
+        width="500"
+        height="500"
+        onClick={handleCanvasClick}
+      />
+      <div className="controls">
+        <button onClick={handleClear}>Clear</button>
+        <button onClick={handleUndo}>Undo</button>
+      </div>
+    </>
   );
 }
