@@ -20,8 +20,8 @@ function Tab() {
 
   return (
     <div className="hello">
-      <h1>Hello {userName}</h1>
       <Canvas />
+      <h1>Hello {userName}</h1>
     </div>
   );
 }

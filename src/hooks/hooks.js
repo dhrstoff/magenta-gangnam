@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 const HOOK_SVG = "M 25, 50 a 25,25 0 1,1 50,0 a 25,25 0 1,1 -50,0";
 const HOOK_PATH = new Path2D(HOOK_SVG);
 const SCALE = 0.2;
-const OFFSET = -100;
+const OFFSET = 0;
 
 export function draw(ctx, location) {
   ctx.fillStyle = "blue";
