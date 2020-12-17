@@ -1,21 +1,27 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
+import { usePersistentCanvas } from "../hooks/hooks";
 
 export default function Canvas() {
-  const canvasRef = useRef(null);
+  const [locations, setLocations, canvasRef] = usePersistentCanvas();
 
-  useEffect(() => {
-    var canvas = canvasRef.current;
-    var ctx = canvas.getContext("2d");
-    ctx.font = "16px Arial";
+  function handleCanvasClick(e) {
+    setLocations([...locations, { x: e.clientX, y: e.clientY }]);
+  }
 
-    canvas.addEventListener("mousemove", function (e) {
-      var cRect = canvas.getBoundingClientRect(); // Gets the CSS positions along with width/height
-      var canvasX = Math.round(e.clientX - cRect.left); // Subtract the 'left' of the canvas from the X/Y
-      var canvasY = Math.round(e.clientY - cRect.top); // positions to get make (0,0) the top left of the
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // canvas
-      ctx.fillText("X: " + canvasX + ", Y: " + canvasY, 10, 20);
-    });
-  });
+  function handleClear() {
+    setLocations([]);
+  }
 
-  return <canvas ref={canvasRef}></canvas>;
+  function handleUndo() {
+    setLocations(locations.slice(0, -1));
+  }
+
+  return (
+    <canvas
+      ref={canvasRef}
+      width="500"
+      height="500"
+      onClick={handleCanvasClick}
+    />
+  );
 }
