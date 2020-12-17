@@ -10,6 +10,7 @@ export function draw(ctx, location) {
   if (location) {
     ctx.fillStyle = "blue";
     ctx.save();
+    // ctx.fillText("Hello World", location.x / SCALE - OFFSET, location.y / SCALE - OFFSET);
     ctx.scale(SCALE, SCALE);
     ctx.translate(location.x / SCALE - OFFSET, location.y / SCALE - OFFSET);
     ctx.fill(HOOK_PATH);
@@ -37,21 +38,21 @@ export function usePersistentCanvas() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    locations.forEach((location) => draw(ctx, location));
 
-    if (locations.length) {
-        const lastAdded = locations.slice(-1)[0];
-        const firstAdded = locations[0];
-        const proximityArray = getDistance(firstAdded, lastAdded)
-        console.log(proximityArray);
+    const lastAdded = locations.slice(-1)[0];
+    locations.forEach((location) => {
+      const nearbyLocation = getDistance(lastAdded, location) < 100;
+      if (nearbyLocation) {
+        draw(ctx, location);
       }
+    });
   });
 
   return [locations, setLocations, canvasRef];
 }
 
 function getDistance(point1, point2) {
-    const a = point1.x - point2.x;
-    const b = point1.y - point2.y;
-    return Math.sqrt(a * a + b * b);
+  const a = point1.x - point2.x;
+  const b = point1.y - point2.y;
+  return Math.sqrt(a * a + b * b);
 }
